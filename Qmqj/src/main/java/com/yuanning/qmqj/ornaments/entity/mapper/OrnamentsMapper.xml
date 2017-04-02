@@ -1,0 +1,333 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yuanning.qmqj.ornaments.dao.OrnamentsMapper">
+  <resultMap id="BaseResultMap" type="com.yuanning.qmqj.ornaments.entity.Ornaments">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="name_replace" jdbcType="VARCHAR" property="nameReplace" />
+    <result column="attack" jdbcType="INTEGER" property="attack" />
+    <result column="defense" jdbcType="INTEGER" property="defense" />
+    <result column="life" jdbcType="INTEGER" property="life" />
+    <result column="life_perc" jdbcType="DOUBLE" property="lifePerc" />
+    <result column="damage_perc" jdbcType="DOUBLE" property="damagePerc" />
+    <result column="element_perc" jdbcType="DOUBLE" property="elementPerc" />
+    <result column="excellent_perc" jdbcType="DOUBLE" property="excellentPerc" />
+    <result column="excellent_prob" jdbcType="DOUBLE" property="excellentProb" />
+    <result column="doub_prob" jdbcType="DOUBLE" property="doubProb" />
+    <result column="rebound" jdbcType="INTEGER" property="rebound" />
+    <result column="additional" jdbcType="INTEGER" property="additional" />
+    <result column="resist" jdbcType="INTEGER" property="resist" />
+    <result column="attack_recovery" jdbcType="INTEGER" property="attackRecovery" />
+    <result column="attack_recovery_perc" jdbcType="DOUBLE" property="attackRecoveryPerc" />
+    <result column="resist_double" jdbcType="DOUBLE" property="resistDouble" />
+    <result column="resist_excellent" jdbcType="DOUBLE" property="resistExcellent" />
+    <result column="resist_lucky" jdbcType="DOUBLE" property="resistLucky" />
+    <result column="medicine_recovery" jdbcType="DOUBLE" property="medicineRecovery" />
+    <result column="holy_recovery" jdbcType="DOUBLE" property="holyRecovery" />
+    <result column="life_recovery" jdbcType="DOUBLE" property="lifeRecovery" />
+    <result column="element_reduce" jdbcType="DOUBLE" property="elementReduce" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, name, name_replace, attack, defense, life, life_perc, damage_perc, element_perc, 
+    excellent_perc, excellent_prob, doub_prob, rebound, additional, resist, attack_recovery, 
+    attack_recovery_perc, resist_double, resist_excellent, resist_lucky, medicine_recovery, 
+    holy_recovery, life_recovery, element_reduce
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ornaments
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  
+  <select id="findOrnamentsByName" parameterType="String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ornaments
+    where name_replace = #{name,jdbcType=VARCHAR}
+  </select>
+  
+  
+  <select id="selectAll"  resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ornaments
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from ornaments
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.yuanning.qmqj.ornaments.entity.Ornaments">
+    insert into ornaments (id, name, name_replace, 
+      attack, defense, life, 
+      life_perc, damage_perc, element_perc, 
+      excellent_perc, excellent_prob, doub_prob, 
+      rebound, additional, resist, 
+      attack_recovery, attack_recovery_perc, resist_double, 
+      resist_excellent, resist_lucky, medicine_recovery, 
+      holy_recovery, life_recovery, element_reduce
+      )
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{nameReplace,jdbcType=VARCHAR}, 
+      #{attack,jdbcType=INTEGER}, #{defense,jdbcType=INTEGER}, #{life,jdbcType=INTEGER}, 
+      #{lifePerc,jdbcType=DOUBLE}, #{damagePerc,jdbcType=DOUBLE}, #{elementPerc,jdbcType=DOUBLE}, 
+      #{excellentPerc,jdbcType=DOUBLE}, #{excellentProb,jdbcType=DOUBLE}, #{doubProb,jdbcType=DOUBLE}, 
+      #{rebound,jdbcType=INTEGER}, #{additional,jdbcType=INTEGER}, #{resist,jdbcType=INTEGER}, 
+      #{attackRecovery,jdbcType=INTEGER}, #{attackRecoveryPerc,jdbcType=DOUBLE}, #{resistDouble,jdbcType=DOUBLE}, 
+      #{resistExcellent,jdbcType=DOUBLE}, #{resistLucky,jdbcType=DOUBLE}, #{medicineRecovery,jdbcType=DOUBLE}, 
+      #{holyRecovery,jdbcType=DOUBLE}, #{lifeRecovery,jdbcType=DOUBLE}, #{elementReduce,jdbcType=DOUBLE}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.yuanning.qmqj.ornaments.entity.Ornaments">
+    insert into ornaments
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="nameReplace != null">
+        name_replace,
+      </if>
+      <if test="attack != null">
+        attack,
+      </if>
+      <if test="defense != null">
+        defense,
+      </if>
+      <if test="life != null">
+        life,
+      </if>
+      <if test="lifePerc != null">
+        life_perc,
+      </if>
+      <if test="damagePerc != null">
+        damage_perc,
+      </if>
+      <if test="elementPerc != null">
+        element_perc,
+      </if>
+      <if test="excellentPerc != null">
+        excellent_perc,
+      </if>
+      <if test="excellentProb != null">
+        excellent_prob,
+      </if>
+      <if test="doubProb != null">
+        doub_prob,
+      </if>
+      <if test="rebound != null">
+        rebound,
+      </if>
+      <if test="additional != null">
+        additional,
+      </if>
+      <if test="resist != null">
+        resist,
+      </if>
+      <if test="attackRecovery != null">
+        attack_recovery,
+      </if>
+      <if test="attackRecoveryPerc != null">
+        attack_recovery_perc,
+      </if>
+      <if test="resistDouble != null">
+        resist_double,
+      </if>
+      <if test="resistExcellent != null">
+        resist_excellent,
+      </if>
+      <if test="resistLucky != null">
+        resist_lucky,
+      </if>
+      <if test="medicineRecovery != null">
+        medicine_recovery,
+      </if>
+      <if test="holyRecovery != null">
+        holy_recovery,
+      </if>
+      <if test="lifeRecovery != null">
+        life_recovery,
+      </if>
+      <if test="elementReduce != null">
+        element_reduce,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="nameReplace != null">
+        #{nameReplace,jdbcType=VARCHAR},
+      </if>
+      <if test="attack != null">
+        #{attack,jdbcType=INTEGER},
+      </if>
+      <if test="defense != null">
+        #{defense,jdbcType=INTEGER},
+      </if>
+      <if test="life != null">
+        #{life,jdbcType=INTEGER},
+      </if>
+      <if test="lifePerc != null">
+        #{lifePerc,jdbcType=DOUBLE},
+      </if>
+      <if test="damagePerc != null">
+        #{damagePerc,jdbcType=DOUBLE},
+      </if>
+      <if test="elementPerc != null">
+        #{elementPerc,jdbcType=DOUBLE},
+      </if>
+      <if test="excellentPerc != null">
+        #{excellentPerc,jdbcType=DOUBLE},
+      </if>
+      <if test="excellentProb != null">
+        #{excellentProb,jdbcType=DOUBLE},
+      </if>
+      <if test="doubProb != null">
+        #{doubProb,jdbcType=DOUBLE},
+      </if>
+      <if test="rebound != null">
+        #{rebound,jdbcType=INTEGER},
+      </if>
+      <if test="additional != null">
+        #{additional,jdbcType=INTEGER},
+      </if>
+      <if test="resist != null">
+        #{resist,jdbcType=INTEGER},
+      </if>
+      <if test="attackRecovery != null">
+        #{attackRecovery,jdbcType=INTEGER},
+      </if>
+      <if test="attackRecoveryPerc != null">
+        #{attackRecoveryPerc,jdbcType=DOUBLE},
+      </if>
+      <if test="resistDouble != null">
+        #{resistDouble,jdbcType=DOUBLE},
+      </if>
+      <if test="resistExcellent != null">
+        #{resistExcellent,jdbcType=DOUBLE},
+      </if>
+      <if test="resistLucky != null">
+        #{resistLucky,jdbcType=DOUBLE},
+      </if>
+      <if test="medicineRecovery != null">
+        #{medicineRecovery,jdbcType=DOUBLE},
+      </if>
+      <if test="holyRecovery != null">
+        #{holyRecovery,jdbcType=DOUBLE},
+      </if>
+      <if test="lifeRecovery != null">
+        #{lifeRecovery,jdbcType=DOUBLE},
+      </if>
+      <if test="elementReduce != null">
+        #{elementReduce,jdbcType=DOUBLE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yuanning.qmqj.ornaments.entity.Ornaments">
+    update ornaments
+    <set>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="nameReplace != null">
+        name_replace = #{nameReplace,jdbcType=VARCHAR},
+      </if>
+      <if test="attack != null">
+        attack = #{attack,jdbcType=INTEGER},
+      </if>
+      <if test="defense != null">
+        defense = #{defense,jdbcType=INTEGER},
+      </if>
+      <if test="life != null">
+        life = #{life,jdbcType=INTEGER},
+      </if>
+      <if test="lifePerc != null">
+        life_perc = #{lifePerc,jdbcType=DOUBLE},
+      </if>
+      <if test="damagePerc != null">
+        damage_perc = #{damagePerc,jdbcType=DOUBLE},
+      </if>
+      <if test="elementPerc != null">
+        element_perc = #{elementPerc,jdbcType=DOUBLE},
+      </if>
+      <if test="excellentPerc != null">
+        excellent_perc = #{excellentPerc,jdbcType=DOUBLE},
+      </if>
+      <if test="excellentProb != null">
+        excellent_prob = #{excellentProb,jdbcType=DOUBLE},
+      </if>
+      <if test="doubProb != null">
+        doub_prob = #{doubProb,jdbcType=DOUBLE},
+      </if>
+      <if test="rebound != null">
+        rebound = #{rebound,jdbcType=INTEGER},
+      </if>
+      <if test="additional != null">
+        additional = #{additional,jdbcType=INTEGER},
+      </if>
+      <if test="resist != null">
+        resist = #{resist,jdbcType=INTEGER},
+      </if>
+      <if test="attackRecovery != null">
+        attack_recovery = #{attackRecovery,jdbcType=INTEGER},
+      </if>
+      <if test="attackRecoveryPerc != null">
+        attack_recovery_perc = #{attackRecoveryPerc,jdbcType=DOUBLE},
+      </if>
+      <if test="resistDouble != null">
+        resist_double = #{resistDouble,jdbcType=DOUBLE},
+      </if>
+      <if test="resistExcellent != null">
+        resist_excellent = #{resistExcellent,jdbcType=DOUBLE},
+      </if>
+      <if test="resistLucky != null">
+        resist_lucky = #{resistLucky,jdbcType=DOUBLE},
+      </if>
+      <if test="medicineRecovery != null">
+        medicine_recovery = #{medicineRecovery,jdbcType=DOUBLE},
+      </if>
+      <if test="holyRecovery != null">
+        holy_recovery = #{holyRecovery,jdbcType=DOUBLE},
+      </if>
+      <if test="lifeRecovery != null">
+        life_recovery = #{lifeRecovery,jdbcType=DOUBLE},
+      </if>
+      <if test="elementReduce != null">
+        element_reduce = #{elementReduce,jdbcType=DOUBLE},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yuanning.qmqj.ornaments.entity.Ornaments">
+    update ornaments
+    set name = #{name,jdbcType=VARCHAR},
+      name_replace = #{nameReplace,jdbcType=VARCHAR},
+      attack = #{attack,jdbcType=INTEGER},
+      defense = #{defense,jdbcType=INTEGER},
+      life = #{life,jdbcType=INTEGER},
+      life_perc = #{lifePerc,jdbcType=DOUBLE},
+      damage_perc = #{damagePerc,jdbcType=DOUBLE},
+      element_perc = #{elementPerc,jdbcType=DOUBLE},
+      excellent_perc = #{excellentPerc,jdbcType=DOUBLE},
+      excellent_prob = #{excellentProb,jdbcType=DOUBLE},
+      doub_prob = #{doubProb,jdbcType=DOUBLE},
+      rebound = #{rebound,jdbcType=INTEGER},
+      additional = #{additional,jdbcType=INTEGER},
+      resist = #{resist,jdbcType=INTEGER},
+      attack_recovery = #{attackRecovery,jdbcType=INTEGER},
+      attack_recovery_perc = #{attackRecoveryPerc,jdbcType=DOUBLE},
+      resist_double = #{resistDouble,jdbcType=DOUBLE},
+      resist_excellent = #{resistExcellent,jdbcType=DOUBLE},
+      resist_lucky = #{resistLucky,jdbcType=DOUBLE},
+      medicine_recovery = #{medicineRecovery,jdbcType=DOUBLE},
+      holy_recovery = #{holyRecovery,jdbcType=DOUBLE},
+      life_recovery = #{lifeRecovery,jdbcType=DOUBLE},
+      element_reduce = #{elementReduce,jdbcType=DOUBLE}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

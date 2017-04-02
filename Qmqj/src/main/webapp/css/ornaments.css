@@ -1,0 +1,12 @@
+#title>th{
+	text-align:center;
+	vertical-align:middle;
+}
+.success>td{
+	text-align:center;
+	vertical-align:middle;
+}
+#insert>td>input{
+	height: 25px; 
+	width: 30px;
+}

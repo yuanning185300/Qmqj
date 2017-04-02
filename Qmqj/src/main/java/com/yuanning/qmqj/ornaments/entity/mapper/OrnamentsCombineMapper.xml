@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yuanning.qmqj.ornaments.dao.OrnamentsCombineMapper" >
+  <resultMap id="BaseResultMap" type="com.yuanning.qmqj.ornaments.entity.OrnamentsCombine" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="combine_name" property="combineName" jdbcType="VARCHAR" />
+    <result column="life_perc" property="lifePerc" jdbcType="DOUBLE" />
+    <result column="damage_perc" property="damagePerc" jdbcType="DOUBLE" />
+    <result column="element_perc" property="elementPerc" jdbcType="DOUBLE" />
+    <result column="excellent_perc" property="excellentPerc" jdbcType="DOUBLE" />
+    <result column="excellent_prob" property="excellentProb" jdbcType="DOUBLE" />
+    <result column="doub_prob" property="doubProb" jdbcType="DOUBLE" />
+    <result column="attack_recovery_perc" property="attackRecoveryPerc" jdbcType="DOUBLE" />
+    <result column="resist_double" property="resistDouble" jdbcType="DOUBLE" />
+    <result column="resist_excellent" property="resistExcellent" jdbcType="DOUBLE" />
+    <result column="resist_lucky" property="resistLucky" jdbcType="DOUBLE" />
+    <result column="medicine_recovery" property="medicineRecovery" jdbcType="DOUBLE" />
+    <result column="holy_recovery" property="holyRecovery" jdbcType="DOUBLE" />
+    <result column="life_recovery" property="lifeRecovery" jdbcType="DOUBLE" />
+    <result column="element_reduce" property="elementReduce" jdbcType="DOUBLE" />
+    <result column="magic_immune" property="magicImmune" jdbcType="DOUBLE" />
+    <result column="physics_immune" property="physicsImmune" jdbcType="DOUBLE" />
+    <result column="avoid" property="avoid" jdbcType="DOUBLE" />
+    <result column="mag_phy_reduce" property="magPhyReduce" jdbcType="DOUBLE" />
+    <result column="special_reduce" property="specialReduce" jdbcType="DOUBLE" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, combine_name, life_perc, damage_perc, element_perc, excellent_perc, excellent_prob, 
+    doub_prob, attack_recovery_perc, resist_double, resist_excellent, resist_lucky, medicine_recovery, 
+    holy_recovery, life_recovery, element_reduce, magic_immune, physics_immune, avoid, 
+    mag_phy_reduce, special_reduce
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from ornaments_combine
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  
+  <select id="selectAll" resultMap="BaseResultMap"  >
+    select 
+    <include refid="Base_Column_List" />
+    from ornaments_combine
+  </select>
+  
+  <select id="findOrnamentsCombineByName" parameterType="String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ornaments_combine
+    where combine_name = #{name,jdbcType=VARCHAR}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from ornaments_combine
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.yuanning.qmqj.ornaments.entity.OrnamentsCombine" >
+    insert into ornaments_combine (id, combine_name, life_perc, 
+      damage_perc, element_perc, excellent_perc, 
+      excellent_prob, doub_prob, attack_recovery_perc, 
+      resist_double, resist_excellent, resist_lucky, 
+      medicine_recovery, holy_recovery, life_recovery, 
+      element_reduce, magic_immune, physics_immune, 
+      avoid, mag_phy_reduce, special_reduce
+      )
+    values (#{id,jdbcType=INTEGER}, #{combineName,jdbcType=VARCHAR}, #{lifePerc,jdbcType=DOUBLE}, 
+      #{damagePerc,jdbcType=DOUBLE}, #{elementPerc,jdbcType=DOUBLE}, #{excellentPerc,jdbcType=DOUBLE}, 
+      #{excellentProb,jdbcType=DOUBLE}, #{doubProb,jdbcType=DOUBLE}, #{attackRecoveryPerc,jdbcType=DOUBLE}, 
+      #{resistDouble,jdbcType=DOUBLE}, #{resistExcellent,jdbcType=DOUBLE}, #{resistLucky,jdbcType=DOUBLE}, 
+      #{medicineRecovery,jdbcType=DOUBLE}, #{holyRecovery,jdbcType=DOUBLE}, #{lifeRecovery,jdbcType=DOUBLE}, 
+      #{elementReduce,jdbcType=DOUBLE}, #{magicImmune,jdbcType=DOUBLE}, #{physicsImmune,jdbcType=DOUBLE}, 
+      #{avoid,jdbcType=DOUBLE}, #{magPhyReduce,jdbcType=DOUBLE}, #{specialReduce,jdbcType=DOUBLE}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.yuanning.qmqj.ornaments.entity.OrnamentsCombine" >
+    insert into ornaments_combine
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="combineName != null" >
+        combine_name,
+      </if>
+      <if test="lifePerc != null" >
+        life_perc,
+      </if>
+      <if test="damagePerc != null" >
+        damage_perc,
+      </if>
+      <if test="elementPerc != null" >
+        element_perc,
+      </if>
+      <if test="excellentPerc != null" >
+        excellent_perc,
+      </if>
+      <if test="excellentProb != null" >
+        excellent_prob,
+      </if>
+      <if test="doubProb != null" >
+        doub_prob,
+      </if>
+      <if test="attackRecoveryPerc != null" >
+        attack_recovery_perc,
+      </if>
+      <if test="resistDouble != null" >
+        resist_double,
+      </if>
+      <if test="resistExcellent != null" >
+        resist_excellent,
+      </if>
+      <if test="resistLucky != null" >
+        resist_lucky,
+      </if>
+      <if test="medicineRecovery != null" >
+        medicine_recovery,
+      </if>
+      <if test="holyRecovery != null" >
+        holy_recovery,
+      </if>
+      <if test="lifeRecovery != null" >
+        life_recovery,
+      </if>
+      <if test="elementReduce != null" >
+        element_reduce,
+      </if>
+      <if test="magicImmune != null" >
+        magic_immune,
+      </if>
+      <if test="physicsImmune != null" >
+        physics_immune,
+      </if>
+      <if test="avoid != null" >
+        avoid,
+      </if>
+      <if test="magPhyReduce != null" >
+        mag_phy_reduce,
+      </if>
+      <if test="specialReduce != null" >
+        special_reduce,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="combineName != null" >
+        #{combineName,jdbcType=VARCHAR},
+      </if>
+      <if test="lifePerc != null" >
+        #{lifePerc,jdbcType=DOUBLE},
+      </if>
+      <if test="damagePerc != null" >
+        #{damagePerc,jdbcType=DOUBLE},
+      </if>
+      <if test="elementPerc != null" >
+        #{elementPerc,jdbcType=DOUBLE},
+      </if>
+      <if test="excellentPerc != null" >
+        #{excellentPerc,jdbcType=DOUBLE},
+      </if>
+      <if test="excellentProb != null" >
+        #{excellentProb,jdbcType=DOUBLE},
+      </if>
+      <if test="doubProb != null" >
+        #{doubProb,jdbcType=DOUBLE},
+      </if>
+      <if test="attackRecoveryPerc != null" >
+        #{attackRecoveryPerc,jdbcType=DOUBLE},
+      </if>
+      <if test="resistDouble != null" >
+        #{resistDouble,jdbcType=DOUBLE},
+      </if>
+      <if test="resistExcellent != null" >
+        #{resistExcellent,jdbcType=DOUBLE},
+      </if>
+      <if test="resistLucky != null" >
+        #{resistLucky,jdbcType=DOUBLE},
+      </if>
+      <if test="medicineRecovery != null" >
+        #{medicineRecovery,jdbcType=DOUBLE},
+      </if>
+      <if test="holyRecovery != null" >
+        #{holyRecovery,jdbcType=DOUBLE},
+      </if>
+      <if test="lifeRecovery != null" >
+        #{lifeRecovery,jdbcType=DOUBLE},
+      </if>
+      <if test="elementReduce != null" >
+        #{elementReduce,jdbcType=DOUBLE},
+      </if>
+      <if test="magicImmune != null" >
+        #{magicImmune,jdbcType=DOUBLE},
+      </if>
+      <if test="physicsImmune != null" >
+        #{physicsImmune,jdbcType=DOUBLE},
+      </if>
+      <if test="avoid != null" >
+        #{avoid,jdbcType=DOUBLE},
+      </if>
+      <if test="magPhyReduce != null" >
+        #{magPhyReduce,jdbcType=DOUBLE},
+      </if>
+      <if test="specialReduce != null" >
+        #{specialReduce,jdbcType=DOUBLE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yuanning.qmqj.ornaments.entity.OrnamentsCombine" >
+    update ornaments_combine
+    <set >
+      <if test="combineName != null" >
+        combine_name = #{combineName,jdbcType=VARCHAR},
+      </if>
+      <if test="lifePerc != null" >
+        life_perc = #{lifePerc,jdbcType=DOUBLE},
+      </if>
+      <if test="damagePerc != null" >
+        damage_perc = #{damagePerc,jdbcType=DOUBLE},
+      </if>
+      <if test="elementPerc != null" >
+        element_perc = #{elementPerc,jdbcType=DOUBLE},
+      </if>
+      <if test="excellentPerc != null" >
+        excellent_perc = #{excellentPerc,jdbcType=DOUBLE},
+      </if>
+      <if test="excellentProb != null" >
+        excellent_prob = #{excellentProb,jdbcType=DOUBLE},
+      </if>
+      <if test="doubProb != null" >
+        doub_prob = #{doubProb,jdbcType=DOUBLE},
+      </if>
+      <if test="attackRecoveryPerc != null" >
+        attack_recovery_perc = #{attackRecoveryPerc,jdbcType=DOUBLE},
+      </if>
+      <if test="resistDouble != null" >
+        resist_double = #{resistDouble,jdbcType=DOUBLE},
+      </if>
+      <if test="resistExcellent != null" >
+        resist_excellent = #{resistExcellent,jdbcType=DOUBLE},
+      </if>
+      <if test="resistLucky != null" >
+        resist_lucky = #{resistLucky,jdbcType=DOUBLE},
+      </if>
+      <if test="medicineRecovery != null" >
+        medicine_recovery = #{medicineRecovery,jdbcType=DOUBLE},
+      </if>
+      <if test="holyRecovery != null" >
+        holy_recovery = #{holyRecovery,jdbcType=DOUBLE},
+      </if>
+      <if test="lifeRecovery != null" >
+        life_recovery = #{lifeRecovery,jdbcType=DOUBLE},
+      </if>
+      <if test="elementReduce != null" >
+        element_reduce = #{elementReduce,jdbcType=DOUBLE},
+      </if>
+      <if test="magicImmune != null" >
+        magic_immune = #{magicImmune,jdbcType=DOUBLE},
+      </if>
+      <if test="physicsImmune != null" >
+        physics_immune = #{physicsImmune,jdbcType=DOUBLE},
+      </if>
+      <if test="avoid != null" >
+        avoid = #{avoid,jdbcType=DOUBLE},
+      </if>
+      <if test="magPhyReduce != null" >
+        mag_phy_reduce = #{magPhyReduce,jdbcType=DOUBLE},
+      </if>
+      <if test="specialReduce != null" >
+        special_reduce = #{specialReduce,jdbcType=DOUBLE},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yuanning.qmqj.ornaments.entity.OrnamentsCombine" >
+    update ornaments_combine
+    set combine_name = #{combineName,jdbcType=VARCHAR},
+      life_perc = #{lifePerc,jdbcType=DOUBLE},
+      damage_perc = #{damagePerc,jdbcType=DOUBLE},
+      element_perc = #{elementPerc,jdbcType=DOUBLE},
+      excellent_perc = #{excellentPerc,jdbcType=DOUBLE},
+      excellent_prob = #{excellentProb,jdbcType=DOUBLE},
+      doub_prob = #{doubProb,jdbcType=DOUBLE},
+      attack_recovery_perc = #{attackRecoveryPerc,jdbcType=DOUBLE},
+      resist_double = #{resistDouble,jdbcType=DOUBLE},
+      resist_excellent = #{resistExcellent,jdbcType=DOUBLE},
+      resist_lucky = #{resistLucky,jdbcType=DOUBLE},
+      medicine_recovery = #{medicineRecovery,jdbcType=DOUBLE},
+      holy_recovery = #{holyRecovery,jdbcType=DOUBLE},
+      life_recovery = #{lifeRecovery,jdbcType=DOUBLE},
+      element_reduce = #{elementReduce,jdbcType=DOUBLE},
+      magic_immune = #{magicImmune,jdbcType=DOUBLE},
+      physics_immune = #{physicsImmune,jdbcType=DOUBLE},
+      avoid = #{avoid,jdbcType=DOUBLE},
+      mag_phy_reduce = #{magPhyReduce,jdbcType=DOUBLE},
+      special_reduce = #{specialReduce,jdbcType=DOUBLE}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

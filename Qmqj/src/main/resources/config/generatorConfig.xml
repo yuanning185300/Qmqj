@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
+<generatorConfiguration>
+	<!-- 配置文件路径 -->
+	<properties resource="jdbc.properties"/>
+	<!-- 配置驱动包路径 -->
+	<classPathEntry location="G:\MavenSave\mysql\mysql-connector-java\5.1.31\mysql-connector-java-5.1.31.jar"/>
+	
+	<context id="context1">
+	<!--  去除自动生成的 注释 -->
+		<commentGenerator>
+			<property name="suppressAllComments" value="true" />
+		</commentGenerator>
+		<jdbcConnection driverClass="${jdbc.driverClassName}"
+			connectionURL="${jdbc.url}" userId="${jdbc.username}" password="${jdbc.password}" />
+		<javaModelGenerator targetPackage="com.yuanning.qmqj.ornaments.entity"
+			targetProject="Qmqj/src/main/java" />
+		<sqlMapGenerator targetPackage="com.yuanning.qmqj.ornaments.entity.mapper"
+			targetProject="Qmqj/src/main/java" />
+		<javaClientGenerator targetPackage="com.yuanning.qmqj.ornaments.dao"
+			targetProject="Qmqj/src/main/java" type="XMLMAPPER" />
+		<!-- false意思为不生成example类和查找方法 -->	
+		<table tableName="ornaments_combine"
+		enableCountByExample="false" 
+		enableUpdateByExample="false" 
+		enableDeleteByExample="false"
+   		enableSelectByExample="false" 
+    	selectByExampleQueryId="false">
+    	
+			<!-- 不需要忽略自增主键 
+			<ignoreColumn column="id" />
+			-->
+		</table>
+	</context>
+</generatorConfiguration>
