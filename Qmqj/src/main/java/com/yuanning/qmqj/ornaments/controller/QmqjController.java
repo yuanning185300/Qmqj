@@ -50,7 +50,7 @@ public class QmqjController {
 	@RequestMapping(value = "/allCombination", method = RequestMethod.GET)
 	public String allCombination(HttpServletRequest request, HttpServletResponse response) {
 		qmqjService.allCombination(request, response);
-		System.out.println("success");
+		System.out.println("success1");
 		return "index";
 
 	}
