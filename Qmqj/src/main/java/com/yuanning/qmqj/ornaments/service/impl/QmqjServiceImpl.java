@@ -124,7 +124,8 @@ public class QmqjServiceImpl implements QmqjService {
 		this.execute(this.combine(a, 5), ornamentsMap, ornamentsCombineMap);
 		Date date2 = new Date();
 		System.out.println(date2.getTime() - date1.getTime());
-		try {
+		//下载所有数据
+		/*try {
 			response.reset();
 			response.setContentType("multipart/form-data");
 			String name = "全部饰品组合.xls";
@@ -144,7 +145,7 @@ public class QmqjServiceImpl implements QmqjService {
 			
 		} catch (IOException e) {
 			e.printStackTrace();
-		}
+		}*/
 	}
 
 	public void execute(List list, Map<String, Ornaments> ornamentsMap,

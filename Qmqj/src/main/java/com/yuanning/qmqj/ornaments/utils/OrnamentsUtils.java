@@ -1,5 +1,12 @@
 package com.yuanning.qmqj.ornaments.utils;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.Properties;
+import java.util.Set;
+
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFRow;
@@ -7,121 +14,32 @@ import org.apache.poi.xssf.usermodel.XSSFRow;
 import com.yuanning.qmqj.ornaments.entity.Ornaments;
 import com.yuanning.qmqj.ornaments.entity.OrnamentsCombine;
 
+
 public class OrnamentsUtils {
-	
-	//设置表头
+
+	// 设置表头
 	public void setHead(XSSFRow row, XSSFCell cell, XSSFCellStyle style) {
-		cell = row.createCell(0);
-		cell.setCellValue("组合名称");
-		cell.setCellStyle(style);
-
-		cell = row.createCell(1);
-		cell.setCellValue("攻击");
-		cell.setCellStyle(style);
-
-		cell = row.createCell(2);
-		cell.setCellValue("防御");
-		cell.setCellStyle(style);
-
-		cell = row.createCell(3);
-		cell.setCellValue("生命上限");
-		cell.setCellStyle(style);
-
-		cell = row.createCell(4);
-		cell.setCellValue("反弹伤害");
-		cell.setCellStyle(style);
-
-		cell = row.createCell(5);
-		cell.setCellValue("附加伤害");
-		cell.setCellStyle(style);
-
-		cell = row.createCell(6);
-		cell.setCellValue("抵挡伤害");
-		cell.setCellStyle(style);
-
-		cell = row.createCell(7);
-		cell.setCellValue("击中恢复");
-		cell.setCellStyle(style);
-
-		cell = row.createCell(8);
-		cell.setCellValue("生命加成");
-		cell.setCellStyle(style);
-
-		cell = row.createCell(9);
-		cell.setCellValue("伤害加成");
-		cell.setCellStyle(style);
-
-		cell = row.createCell(10);
-		cell.setCellValue("元素伤害加成");
-		cell.setCellStyle(style);
-
-		cell = row.createCell(11);
-		cell.setCellValue("卓越伤害加成");
-		cell.setCellStyle(style);
-
-		cell = row.createCell(12);
-		cell.setCellValue("卓越一击几率");
-		cell.setCellStyle(style);
-
-		cell = row.createCell(13);
-		cell.setCellValue("双倍一击几率");
-		cell.setCellStyle(style);
-
-		cell = row.createCell(14);
-		cell.setCellValue("击中恢复加成");
-		cell.setCellStyle(style);
-
-		cell = row.createCell(15);
-		cell.setCellValue("抵抗双倍一击几率");
-		cell.setCellStyle(style);
-
-		cell = row.createCell(16);
-		cell.setCellValue("抵抗卓越一击几率");
-		cell.setCellStyle(style);
-
-		cell = row.createCell(17);
-		cell.setCellValue("抵抗幸运一击几率");
-		cell.setCellStyle(style);
-
-		cell = row.createCell(18);
-		cell.setCellValue("药水恢复效果");
-		cell.setCellStyle(style);
-
-		cell = row.createCell(19);
-		cell.setCellValue("圣水回复效果");
-		cell.setCellStyle(style);
-
-		cell = row.createCell(20);
-		cell.setCellValue("生命自动回复");
-		cell.setCellStyle(style);
-
-		cell = row.createCell(21);
-		cell.setCellValue("元素伤害减少");
-		cell.setCellStyle(style);
-
-		cell = row.createCell(22);
-		cell.setCellValue("魔法免疫");
-		cell.setCellStyle(style);
-
-		cell = row.createCell(23);
-		cell.setCellValue("物理免疫");
-		cell.setCellStyle(style);
-
-		cell = row.createCell(24);
-		cell.setCellValue("闪避");
-		cell.setCellStyle(style);
-
-		cell = row.createCell(25);
-		cell.setCellValue("魔法物理伤害减少");
-		cell.setCellStyle(style);
-
-		cell = row.createCell(26);
-		cell.setCellValue("特殊伤害减少");
-		cell.setCellStyle(style);
+		//OrderedProperties重写properties类的方法，为了获取有顺序的数据
+		Properties pps = new OrderedProperties();
+		//获取项目根路径
+		String path = Thread.currentThread().getContextClassLoader().getResource("").getPath();
+		try {
+			pps.load(new InputStreamReader(
+					new FileInputStream(path+"AllProperty.properties"), "UTF-8"));
+			int i = 0;
+			Set<String> property = pps.stringPropertyNames();
+			for(String s:property){
+				cell = row.createCell(i++);
+				cell.setCellValue(pps.getProperty(s));
+				cell.setCellStyle(style);
+			}
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
-
-	
-	//将饰品组合信息添加到汇总信息
+	// 将饰品组合信息添加到汇总信息
 	public void keepOrnamentsCombine(AllOrnamentsCombine allOrnamentsCombine, OrnamentsCombine ornamentsCombine) {
 
 		if (ornamentsCombine.getLifePerc() != null && !"".equals(ornamentsCombine.getLifePerc())) {
@@ -183,8 +101,8 @@ public class OrnamentsUtils {
 			allOrnamentsCombine.setSpecialReduce(ornamentsCombine.getSpecialReduce());
 		}
 	}
-	
-	//将饰品组合中单个饰品添加到汇总信息中
+
+	// 将饰品组合中单个饰品添加到汇总信息中
 
 	public void keepOrnaments(AllOrnamentsCombine allOrnamentsCombine, Ornaments ornaments) {
 		if (allOrnamentsCombine.getName() == null || "".equals(allOrnamentsCombine.getName())) {
@@ -257,8 +175,8 @@ public class OrnamentsUtils {
 			allOrnamentsCombine.setElementReduce(ornaments.getElementReduce() * 9.8);
 		}
 	}
-	
-	//将全部单个饰品信息添加到汇总信息里面
+
+	// 将全部单个饰品信息添加到汇总信息里面
 
 	public void keepOrnamentsOne(AllOrnamentsCombine allOrnamentsCombine, Ornaments ornaments) {
 		if (ornaments.getAttack() != null && !"".equals(ornaments.getAttack())) {
@@ -325,5 +243,5 @@ public class OrnamentsUtils {
 			allOrnamentsCombine.setElementReduce(ornaments.getElementReduce());
 		}
 	}
-	
+
 }
