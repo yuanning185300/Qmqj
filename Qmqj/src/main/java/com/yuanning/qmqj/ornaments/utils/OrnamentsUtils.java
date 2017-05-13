@@ -106,7 +106,9 @@ public class OrnamentsUtils {
 
 	public void keepOrnaments(AllOrnamentsCombine allOrnamentsCombine, Ornaments ornaments) {
 		if (allOrnamentsCombine.getName() == null || "".equals(allOrnamentsCombine.getName())) {
-			allOrnamentsCombine.setName(ornaments.getName());
+			if(ornaments.getName() != null || !"".equals(ornaments.getName())){		
+				allOrnamentsCombine.setName(ornaments.getName());	
+			}		
 		} else {
 			allOrnamentsCombine.setName("+" + ornaments.getName());
 		}

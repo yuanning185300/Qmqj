@@ -1,9 +1,12 @@
 package com.yuanning.qmqj.ornaments.service.impl;
 
+import java.beans.PropertyDescriptor;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -165,10 +168,7 @@ public class QmqjServiceImpl implements QmqjService {
 		for (int i = 0, length = list.size(); i < length; i++) {
 			// 新建导出对象
 			AllOrnamentsCombine allOrnamentsCombine = new AllOrnamentsCombine();
-			//现将所有的单个饰品加到对象中			
-			 for (Map.Entry<String, Ornaments> entry : ornamentsMap.entrySet()) {
-				 ornamentsUtils.keepOrnamentsOne(allOrnamentsCombine, entry.getValue());
-			}		
+				
 			// 取出组合
 			char[] a = (char[]) list.get(i);// [1,2,3,4,5]
 			// 遍历
@@ -211,6 +211,11 @@ public class QmqjServiceImpl implements QmqjService {
 					ornamentsUtils.keepOrnamentsCombine(allOrnamentsCombine, ornamentsCombine);
 				}
 			}
+			
+			//现将所有的单个饰品加到对象中			
+			 for (Map.Entry<String, Ornaments> entry : ornamentsMap.entrySet()) {
+				 ornamentsUtils.keepOrnamentsOne(allOrnamentsCombine, entry.getValue());
+			}	
 			allOrnamentsCombineList.add(allOrnamentsCombine);
 		}
 
@@ -256,8 +261,20 @@ public class QmqjServiceImpl implements QmqjService {
 
 		for (int i = 0, length = allOrnamentsCombineList.size(); i < length; i++) {
 			row = sheet.createRow(i + 1);
-
+			//int j=0;
 			AllOrnamentsCombine allOrnamentsCombine = allOrnamentsCombineList.get(i);
+			/*try {
+				Class cl =Class.forName("com.yuanning.qmqj.ornaments.utils.AllOrnamentsCombine");
+				Field[] fields = cl.getDeclaredFields();// 获得属性
+				for (Field field : fields) {
+					PropertyDescriptor pd = new PropertyDescriptor(field.getName(), cl);
+					Method getMethod = pd.getReadMethod();// 获得get方法
+					Object o = getMethod.invoke(allOrnamentsCombine);// 执行get方法返回一个Object
+					row.createCell(j++).setCellValue(o.toString());
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}*/
 			// 第四步，创建单元格，并设置值
 			row.createCell(0).setCellValue(allOrnamentsCombine.getName());
 			row.createCell(1).setCellValue(allOrnamentsCombine.getAttack());

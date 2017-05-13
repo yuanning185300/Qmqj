@@ -1,9 +1,8 @@
 package com.yuanning.qmqj.ornaments.utils;
 
 public class AllOrnamentsCombine {
-	private Integer id;
 
-    private String name;
+    private String name="";
 
     private Double attack=0.0;
 
@@ -57,17 +56,7 @@ public class AllOrnamentsCombine {
 
     private Double specialReduce=0.0;
     
-    
-
-
-
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
+   
 
 	public String getName() {
 		return name;
