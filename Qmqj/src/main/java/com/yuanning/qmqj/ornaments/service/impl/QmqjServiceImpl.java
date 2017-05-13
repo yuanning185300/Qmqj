@@ -108,32 +108,22 @@ public class QmqjServiceImpl implements QmqjService {
 		List<Ornaments> ornamentsList = ornamentsDao.selectAll();
 		// 把饰品装到map中
 		Map<String, Ornaments> ornamentsMap = new HashMap<String, Ornaments>();
-		
 		Map<String, OrnamentsCombine> ornamentsCombineMap = new HashMap<String, OrnamentsCombine>();
 		// 把饰品组合装到map中
 		for (OrnamentsCombine ornamentsCombine : combineList) {
 			ornamentsCombineMap.put(ornamentsCombine.getCombineName(), ornamentsCombine);
 		}
-
-		int length = ornamentsList.size();
 		// 新建char[]放入所有饰品名称
-		char[] a = new char[length];
+		char[] a = new char[ornamentsList.size()];
 		int i = 0;
 		for (Ornaments Ornaments : ornamentsList) {
-
 			ornamentsMap.put(Ornaments.getNameReplace(), Ornaments);
-			for (char b : Ornaments.getNameReplace().toCharArray()) {
-				a[i] = b;
-			}
-			i++;
+			a[i++]=Ornaments.getNameReplace().charAt(0);
 		}
-		// list保存所有5个饰品组合
-		List list = this.combine(a, 5);
 		// 处理并保存所有数据
-		this.execute(list, ornamentsMap, ornamentsCombineMap);
+		this.execute(this.combine(a, 5), ornamentsMap, ornamentsCombineMap);
 		Date date2 = new Date();
 		System.out.println(date2.getTime() - date1.getTime());
-
 		try {
 			response.reset();
 			response.setContentType("multipart/form-data");
@@ -174,13 +164,10 @@ public class QmqjServiceImpl implements QmqjService {
 		for (int i = 0, length = list.size(); i < length; i++) {
 			// 新建导出对象
 			AllOrnamentsCombine allOrnamentsCombine = new AllOrnamentsCombine();
-			//现将所有的单个饰品加到对象中
-			
+			//现将所有的单个饰品加到对象中			
 			 for (Map.Entry<String, Ornaments> entry : ornamentsMap.entrySet()) {
 				 ornamentsUtils.keepOrnamentsOne(allOrnamentsCombine, entry.getValue());
-			}
-			
-			
+			}		
 			// 取出组合
 			char[] a = (char[]) list.get(i);// [1,2,3,4,5]
 			// 遍历
@@ -223,9 +210,6 @@ public class QmqjServiceImpl implements QmqjService {
 					ornamentsUtils.keepOrnamentsCombine(allOrnamentsCombine, ornamentsCombine);
 				}
 			}
-
-			//System.out.println(i);
-
 			allOrnamentsCombineList.add(allOrnamentsCombine);
 		}
 
@@ -305,7 +289,6 @@ public class QmqjServiceImpl implements QmqjService {
 			row.createCell(26).setCellValue(allOrnamentsCombine.getSpecialReduce());
 
 		}
-
 		// 第六步，将文件存到指定位置
 		try {
 			FileOutputStream fout = new FileOutputStream("F:/java/qmqj.xls");
