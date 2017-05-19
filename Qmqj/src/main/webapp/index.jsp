@@ -29,6 +29,7 @@
    		<a href="/Qmqj/qmqj/allCombination">下载全部饰品组合</a>
    		<a href="/Qmqj/qmqj/findAll">添加饰品</a>
    		<a href="/Qmqj/qmqj/news">测试</a>
+   		<a href="/Qmqj/qmqj/word">预览word</a>
 	</div>
 </body>
 </html>
