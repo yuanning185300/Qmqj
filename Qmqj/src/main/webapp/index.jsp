@@ -21,6 +21,7 @@
 	});
 } */
 
+//$(".submit").()
 </script>
 </head>
 <body>
@@ -29,7 +30,10 @@
    		<a href="/Qmqj/qmqj/allCombination">下载全部饰品组合</a>
    		<a href="/Qmqj/qmqj/findAll">添加饰品</a>
    		<a href="/Qmqj/qmqj/news">测试</a>
-   		<a href="/Qmqj/qmqj/word">预览word</a>
+   		<form action="/Qmqj/qmqj/upload" method="post" enctype="multipart/form-data"> 
+   			<input type="file" name="files" id="file" class="file" multiple="multiple"/>
+   			<input type="submit" class="submit" value="提交" />
+   		</form>
 	</div>
 </body>
 </html>
