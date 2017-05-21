@@ -24,7 +24,7 @@
 //$(".submit").()
 </script>
 </head>
-<body>
+<body>1
 	<div id="myButtons1" class="bs-example">
    		<!-- <button type="button" class="btn btn-primary ornaments" onclick="ornaments()">导出全部饰品组合</button> -->
    		<a href="/Qmqj/qmqj/allCombination">下载全部饰品组合</a>
