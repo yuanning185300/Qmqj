@@ -22,7 +22,7 @@ public class OrnamentsUtils {
 		//OrderedProperties重写properties类的方法，为了获取有顺序的数据
 		Properties pps = new OrderedProperties();
 		//获取项目根路径
-		String path = Thread.currentThread().getContextClassLoader().getResource("").getPath();
+		String path = getPath.getPath();
 		try {
 			pps.load(new InputStreamReader(
 					new FileInputStream(path+"AllProperty.properties"), "UTF-8"));

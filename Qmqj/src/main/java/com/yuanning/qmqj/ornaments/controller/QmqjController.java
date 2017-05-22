@@ -19,9 +19,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.yuanning.qmqj.ornaments.entity.Login;
 import com.yuanning.qmqj.ornaments.entity.Ornaments;
 import com.yuanning.qmqj.ornaments.entity.OrnamentsCombine;
 import com.yuanning.qmqj.ornaments.service.QmqjService;
+import com.yuanning.qmqj.ornaments.utils.getPath;
 
 @Controller
 @RequestMapping("/qmqj")
@@ -63,11 +65,25 @@ public class QmqjController {
 
 	}
 
-	// 测试
-	@RequestMapping(value = "/news", method = RequestMethod.GET)
-	public void news() {
-		qmqjService.news();
-		System.out.println("success");
+	// 登录
+	@RequestMapping(value = "/login", method = RequestMethod.POST)
+	public void login(HttpServletRequest request, HttpServletResponse response,Login login) {
+		String userName=login.getUserName();
+		String passWord=login.getPassWord();
+		String path =request.getSession().getServletContext().getRealPath("");
+		Long currentTime=System.currentTimeMillis();
+		String dirName=path+File.separator+currentTime.toString();
+		/*File dir = new File(dirName);
+		
+		dir.mkdir();*/
+		
+		System.out.println(path);
+		try {
+			response.getWriter().print(currentTime.toString());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 	}
 
@@ -75,20 +91,23 @@ public class QmqjController {
 	 * Upload single file using Spring Controller
 	 */
 	@RequestMapping(value = "/upload", method = RequestMethod.POST)
-	public void uploadFileHandler(@RequestParam("files") MultipartFile[] files ) throws IOException {
-		//String fileName = URLDecoder.decode(files[0].getOriginalFilename(), "UTF-8"); 
-		//System.out.println(fileName);
+	public void uploadFileHandler(@RequestParam("files") MultipartFile[] files,@RequestParam("currentTime") String name,HttpServletRequest request) throws IOException {
+		// String fileName = URLDecoder.decode(files[0].getOriginalFilename(),
+		// "UTF-8");
+		// System.out.println(fileName);
+		System.out.println(name);
 		if (files.length > 0) {
 			InputStream in = null;
 			OutputStream out = null;
 			for (int i = 0; i < files.length; i++) {
 				MultipartFile file = files[i];
 				try {
-					String rootPath = "F://";
-					File dir = new File(rootPath + File.separator + "tmpFiles");
+					String rootPath =request.getSession().getServletContext().getRealPath("")+File.separator+name;
+					File dir = new File(rootPath);
 					if (!dir.exists())
 						dir.mkdirs();
-					File serverFile = new File(dir.getAbsolutePath() + File.separator + URLDecoder.decode(file.getOriginalFilename(), "UTF-8"));
+					File serverFile = new File(dir.getAbsolutePath() + File.separator
+							+ URLDecoder.decode(file.getOriginalFilename(), "UTF-8"));
 					in = file.getInputStream();
 					out = new FileOutputStream(serverFile);
 					byte[] b = new byte[1024];

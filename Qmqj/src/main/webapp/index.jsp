@@ -21,7 +21,64 @@
 	});
 } */
 
-//$(".submit").()
+/* $(".submit").click(function(){
+	
+}) */
+/* 另外一种提交方式，formData */
+
+function submit1(){
+	var form = new FormData(document.getElementById("formData"));
+	//alert(form)
+    $.ajax({
+        url:"/Qmqj/qmqj/upload",
+        type:"post",
+        data:form,
+        processData:false,
+        contentType:false,
+        success:function(data){
+            console.log("over..");
+        },
+        error:function(e){
+            alert("错误！！");
+        }
+    }); 
+}
+function test(){
+	var login={
+			userName:$(".userName").val(),
+			passWord:$(".passWord").val(),
+			}
+	console.log(login)
+	$.ajax({
+        url:"/Qmqj/qmqj/login",
+        type:"POST",
+        dataType:'text',
+        data:login,
+        success:function(backData){
+        	alert(backData)
+        	$(".currentTime").val(backData);
+        	 var form = new FormData(document.getElementById("formData"));
+            $.ajax({
+                url:"/Qmqj/qmqj/upload",
+                type:"post",
+                data:form,
+                processData:false,
+                contentType:false,
+                success:function(data){
+                    console.log("over..");
+                },
+                error:function(e){
+                    alert("错误！！");
+                }
+            }); 
+        },
+        error:function(e){
+            alert("错误！！");
+        }
+    });
+	
+    
+}
 </script>
 </head>
 <body>1
@@ -30,10 +87,17 @@
    		<a href="/Qmqj/qmqj/allCombination">下载全部饰品组合</a>
    		<a href="/Qmqj/qmqj/findAll">添加饰品</a>
    		<a href="/Qmqj/qmqj/news">测试</a>
-   		<form action="/Qmqj/qmqj/upload" method="post" enctype="multipart/form-data"> 
+   		<!-- style="display: none" -->
+   		<form action="" method="post" enctype="multipart/form-data" id="formData"> 
+   			<input type="text" name="currentTime" class="currentTime" />
    			<input type="file" name="files" id="file" class="file" multiple="multiple"/>
-   			<input type="submit" class="submit" value="提交" />
+   			<input type="submit" class="submit" value="提交" onclick="return submit1();" /> 
    		</form>
+   		
+   		
+   		<input type="text" class="userName"/>
+   		<input type="text" class="passWord"/>
+   		<input type="button" value="提交" onclick="test()"/>
 	</div>
 </body>
 </html>
