@@ -1,13 +1,6 @@
 package com.yuanning.qmqj.ornaments.service.impl;
 
-import java.beans.PropertyDescriptor;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -16,15 +9,10 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
-import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
-import org.apache.poi.hssf.usermodel.HSSFRow;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFRow;
@@ -40,6 +28,7 @@ import com.yuanning.qmqj.ornaments.entity.Ornaments;
 import com.yuanning.qmqj.ornaments.entity.OrnamentsCombine;
 import com.yuanning.qmqj.ornaments.service.QmqjService;
 import com.yuanning.qmqj.ornaments.utils.AllOrnamentsCombine;
+import com.yuanning.qmqj.ornaments.utils.Combine;
 import com.yuanning.qmqj.ornaments.utils.OrnamentsUtils;
 
 @Service("qmqjService")
@@ -124,7 +113,7 @@ public class QmqjServiceImpl implements QmqjService {
 			a[i++]=Ornaments.getNameReplace().charAt(0);
 		}
 		// 处理并保存所有数据
-		this.execute(this.combine(a, 5), ornamentsMap, ornamentsCombineMap);
+		this.execute(Combine.combine(a, 5), ornamentsMap, ornamentsCombineMap);
 		Date date2 = new Date();
 		System.out.println(date2.getTime() - date1.getTime());
 		//下载所有数据
@@ -182,7 +171,7 @@ public class QmqjServiceImpl implements QmqjService {
 
 			// 将组合数据存入将查询到的数据存入allOrnamentsCombine对象中
 			// 两种组合
-			combineList = this.combine(a, 2);
+			combineList = Combine.combine(a, 2);
 			for (int h = 0, len = combineList.size(); h < len; h++) {
 				char[] b = (char[]) combineList.get(h);// [1,2]
 				Arrays.sort(b);
@@ -198,7 +187,7 @@ public class QmqjServiceImpl implements QmqjService {
 			}
 
 			// 三种组合
-			combineList = this.combine(a, 3);
+			combineList = Combine.combine(a, 3);
 			for (int h = 0, len = combineList.size(); h < len; h++) {
 				char[] b = (char[]) combineList.get(h);// [1,2,3]
 				Arrays.sort(b);
@@ -222,25 +211,6 @@ public class QmqjServiceImpl implements QmqjService {
 		// 导出为execl
 		this.export(allOrnamentsCombineList);
 	}
-
-	public static boolean isEqual(String str1, String str2) {
-		if (str1 == null || str2 == null || str1.length() != str2.length()) {
-			return false;
-		}
-		char[] chas1 = str1.toCharArray();
-		char[] chas2 = str2.toCharArray();
-		int[] map = new int[256];
-		for (int i = 0; i < chas1.length; i++) {
-			map[chas1[i]]++;
-		}
-		for (int i = 0; i < chas2.length; i++) {
-			if (map[chas2[i]]-- == 0) {
-				return false;
-			}
-		}
-		return true;
-	}
-
 	private void export(List<AllOrnamentsCombine> allOrnamentsCombineList) {
 
 		// 第一步，创建一个webbook，对应一个Excel文件
@@ -315,91 +285,5 @@ public class QmqjServiceImpl implements QmqjService {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
-	}
-
-	
-
-	// 找出所有组合的list
-	public List combine(char[] a, int m) {
-		int n = a.length;
-		if (m > n) {
-			System.out.println("错误！数组a中只有" + n + "个元素。" + m + "大于" + 2 + "!!!");
-		}
-
-		List result = new ArrayList();
-
-		int[] bs = new int[n];
-		for (int i = 0; i < n; i++) {
-			bs[i] = 0;
-		}
-		// 初始化
-		for (int i = 0; i < m; i++) {
-			bs[i] = 1;
-		}
-		boolean flag = true;
-		boolean tempFlag = false;
-		int pos = 0;
-		int sum = 0;
-		// 首先找到第一个10组合，然后变成01，同时将左边所有的1移动到数组的最左边
-		do {
-			sum = 0;
-			pos = 0;
-			tempFlag = true;
-			result.add(print(bs, a, m));
-
-			for (int i = 0; i < n - 1; i++) {
-				if (bs[i] == 1 && bs[i + 1] == 0) {
-					bs[i] = 0;
-					bs[i + 1] = 1;
-					pos = i;
-					break;
-				}
-			}
-			// 将左边的1全部移动到数组的最左边
-
-			for (int i = 0; i < pos; i++) {
-				if (bs[i] == 1) {
-					sum++;
-				}
-			}
-			for (int i = 0; i < pos; i++) {
-				if (i < sum) {
-					bs[i] = 1;
-				} else {
-					bs[i] = 0;
-				}
-			}
-
-			// 检查是否所有的1都移动到了最右边
-			for (int i = n - m; i < n; i++) {
-				if (bs[i] == 0) {
-					tempFlag = false;
-					break;
-				}
-			}
-			if (tempFlag == false) {
-				flag = true;
-			} else {
-				flag = false;
-			}
-
-		} while (flag);
-		result.add(print(bs, a, m));
-
-		return result;
-	}
-
-	// 每一种组合
-	private char[] print(int[] bs, char[] a, int m) {
-		char[] result = new char[m];
-		int pos = 0;
-		for (int i = 0; i < bs.length; i++) {
-			if (bs[i] == 1) {
-				result[pos] = a[i];
-				pos++;
-			}
-		}
-		return result;
 	}
 }
