@@ -42,7 +42,7 @@ function submit1(){
             alert("错误！！");
         }
     }); 
-}
+}5
 function test(){
 	var login={
 			userName:$(".userName").val(),
