@@ -42,7 +42,7 @@ function submit1(){
             alert("错误！！");
         }
     }); 
-}5
+}
 function test(){
 	var login={
 			userName:$(".userName").val(),
@@ -81,7 +81,7 @@ function test(){
 }
 </script>
 </head>
-<body>1
+<body>
 	<div id="myButtons1" class="bs-example">
    		<!-- <button type="button" class="btn btn-primary ornaments" onclick="ornaments()">导出全部饰品组合</button> -->
    		<a href="/Qmqj/qmqj/allCombination">下载全部饰品组合</a>
